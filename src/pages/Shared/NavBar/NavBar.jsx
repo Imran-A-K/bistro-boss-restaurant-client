@@ -1,18 +1,42 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const NavBar = () => {
-    const navOptions = <>
-    <li>
-                <Link to="/">Home</Link>
-              </li>
-    <li>
-                <Link to="/menu">Our Menu</Link>
-              </li>
-    <li>
-                <Link to="/order">Order</Link>
-              </li>
-             
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+    .then()
+    .catch(error => console.log(error.message))
+
+  }
+  const navOptions = (
+    <>
+      <li className="text-gray-900 lg:text-white">
+        <Link to="/">Home</Link>
+      </li>
+      <li className="text-gray-900 lg:text-white">
+        <Link to="/menu">Our Menu</Link>
+      </li>
+      <li className="text-gray-900 lg:text-white">
+        <Link to="/order/salad">Order</Link>
+      </li>
+      <li className="text-gray-900 lg:text-white">
+        <Link to="/secret">Secret</Link>
+      </li>
+      
+      {
+        user ? <>
+        <span>{user?.displayName}</span>
+        <button onClick={handleLogOut} className="btn btn-ghost text-gray-900 lg:text-white">LogOut</button>
+        </> : <>
+        <li className="text-gray-900 lg:text-white">
+        <Link className="text-center" to="/login">Login</Link>
+      </li>
+        </>
+      }
     </>
+  );
   return (
     <>
       <div className="max-w-screen-xl fixed z-10 bg-opacity-30 bg-black navbar text-white">
@@ -44,9 +68,7 @@ const NavBar = () => {
           <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navOptions}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
           <a className="btn">Get started</a>
