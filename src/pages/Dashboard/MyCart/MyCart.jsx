@@ -1,11 +1,46 @@
 import { Helmet } from "react-helmet-async";
 import useCart from "../../../hooks/useCart";
+import { FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const MyCart = () => {
-  const [cart] = useCart();
+  const [cart,refetch] = useCart();
+  // google search how does reduce work
   const total = cart.reduce((sum, item) => item.price + sum, 0);
+  const handleDelete = item => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/carts/${item._id}`,{
+          method: "DELETE"
+        })
+        .then(response => {
+          return response.json()
+        })
+        .then(async(data) => {
+          if(data.deletedCount>0){
+          await Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        refetch();
+          }
+          
+        })
+        
+      }
+    }) 
+  }
   return (
-    <div>
+    <div className="w-full pl-5">
       <Helmet>
         <title>Bistro Boss | My Cart</title>
       </Helmet>
@@ -19,51 +54,33 @@ const MyCart = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>#</th>
-              <th>Food</th>
-              <th>Item Name</th>
-              <th>Price</th>
-              <th>Action</th>
+              <th className="bg-[#D1A054]">#</th>
+              <th className="bg-[#D1A054]">Food</th>
+              <th className="bg-[#D1A054]">Item Name</th>
+              <th className="bg-[#D1A054]">Price</th>
+              <th className="bg-[#D1A054]">Action</th>
             </tr>
           </thead>
           <tbody>
-            {cart.map(row => <tr
-            key={row._id}
-            >
-              <td>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </td>
-              <td>
-                <div className="flex items-center space-x-3">
+            {cart.map((item, index) => (
+              <tr key={item._id}>
+                <td>{index + 1}</td>
+                <td>
                   <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">
-                      <img
-                        src="/tailwind-css-component-profile-2@56w.png"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+                      <img src={item.image} alt="" />
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold">Hart Hagerty</div>
-                    <div className="text-sm opacity-50">United States</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Zemlak, Daniel and Leannon
-                <br />
-                <span className="badge badge-ghost badge-sm">
-                  Desktop Support Technician
-                </span>
-              </td>
-              <td>Purple</td>
-              <td>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </td>
-            </tr>)}
-            
+                </td>
+                <td>
+                  {item.name}
+                </td>
+                <td className="text-end">${item.price}</td>
+                <td>
+                  <button onClick={() => handleDelete(item)} className="btn bg-red-600 text-white btn-ghost"><FaTrashAlt /></button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
