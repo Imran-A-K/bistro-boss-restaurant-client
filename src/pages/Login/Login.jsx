@@ -3,14 +3,16 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, val
 import { AuthContext } from '../../providers/AuthProviders';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { FaGoogle } from "react-icons/fa";
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 const Login = () => {
     const captchaRef = useRef(null)
     const [disabled, setDisabled] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
 
-    const from = location.state?.from?.pathname || "/"
+    const from = location.state?.from?.pathname || "/" ;
   const {signIn} = useContext(AuthContext)
 
     const handleLogin = (event) => {
@@ -94,6 +96,7 @@ const Login = () => {
         </div>
       </form>
       <p><small>New Here? <Link to="/signup">Create an account</Link></small></p>
+     <SocialLogin />
     </div>
   </div>
 </div>
