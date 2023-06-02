@@ -54,14 +54,22 @@ const AuthProviders = ({ children }) => {
         .then(data => {
           // console.log(data.data.token)
           localStorage.setItem('access-token', data.data.token)
+          setLoading(false) 
+          // you have to give this in this if else statement that too at the last because if this is set outside of this block then it will
+          // set the loading state to false before the jwt token arrives
+          // the tanstack useQuery custom hook calls the axios api to check with the token
+          // so because the token is not available it will redirect the user to the login page even if login is successful
+          // it is because you called the useQuery at the navbar that does not find the token at local storage so this bug is triggered unless the user signs with a google account 
+          // he will be redirected to the login page continuously because of the useAxiousSecure hook that logs out and redirects login page
+          // if the api is hit without the token or with expired token 
         })
       }
       else{
         localStorage.removeItem('access-token')
+        setLoading(false)
       }
       
 
-        setLoading(false) 
         console.log(currentUser)
 
       });
