@@ -28,19 +28,36 @@ const AllUsers = () => {
           })
           .then(async (data) => {
             if (data.deletedCount > 0) {
+              refetch();
               await Swal.fire(
                 "Deleted!",
                 "Your file has been deleted.",
                 "success"
               );
-              refetch();
             }
           });
       }
     });
   };
 
-  const handleMakeAdmin = (id) => {
+  const handleMakeAdmin = (user) => {
+
+    fetch(`http://localhost:5000/users/admin/${user._id}`,{
+      method: "PATCH"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.modifiedCount){
+        refetch();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${user.name} is an Admin now`,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
 
   }
 
@@ -69,12 +86,12 @@ const AllUsers = () => {
               <tr key={user._id} className="hover">
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
-                <td>{user.name}</td>
+                <td>{user.email}</td>
                 <td>{
                   
                   user.role === 'admin' ? 'admin' : 
                   <button
-                  onClick={() => handleMakeAdmin(user._id)}
+                  onClick={() => handleMakeAdmin(user)}
                   className="btn bg-orange-600 text-white btn-ghost"
                 >
                   <FaUserShield />
