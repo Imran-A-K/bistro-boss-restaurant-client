@@ -35,7 +35,7 @@ const AuthProviders = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   } 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, async(currentUser) => {
         setUser(currentUser)
         //get and set token you can do it with fetch but for this project axios is used
 
@@ -51,7 +51,7 @@ const AuthProviders = ({ children }) => {
         // })
         // .then()
       if(currentUser){
-        axios.post('http://localhost:5000/jwt', { email: currentUser.email })
+        await axios.post('http://localhost:5000/jwt', { email: currentUser.email })
         .then(data => {
           // console.log(data.data.token)
           localStorage.setItem('access-token', data.data.token)
