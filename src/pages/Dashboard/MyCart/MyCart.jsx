@@ -2,9 +2,11 @@ import { Helmet } from "react-helmet-async";
 import useCart from "../../../hooks/useCart";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyCart = () => {
   const [cart,refetch] = useCart();
+  const navigate= useNavigate()
   // google search how does reduce work
   const total = cart.reduce((sum, item) => item.price + sum, 0);
   const handleDelete = item => {
@@ -39,6 +41,7 @@ const MyCart = () => {
       }
     }) 
   }
+  
   return (
     <div className="w-full pl-5">
       <Helmet>
@@ -47,7 +50,8 @@ const MyCart = () => {
       <div className="uppercase h-[60px] items-center font-semibold flex justify-evenly">
         <h3 className="text-3xl">Total Items: {cart.length || 0}</h3>
         <h3 className="text-3xl">Total Price: ${total}</h3>
-        <button className="btn btn-outline btn-warning btn-sm">Pay</button>
+        <Link to={"/dashboard/payment"}><button className="btn btn-outline btn-warning btn-sm">Pay</button>
+</Link>
       </div>
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
