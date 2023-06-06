@@ -10,13 +10,13 @@ const SocialLogin = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || "/" ;
-    const handleGoogleignIn = () => {
+    const handleGoogleSignIn = () => {
         googleSignIn()
         .then(result =>{
             const loggedInUser = result.user;
             const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email };
 
-            fetch(`http://localhost:5000/users`, {
+            fetch(`https://bistro-boss-server-drab.vercel.app/users`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -39,7 +39,7 @@ const SocialLogin = () => {
     <div>
           <div className="divider">OR</div>
           <div className='w-full text-center my-4'>
-     <button onClick={handleGoogleignIn} className="btn btn-circle btn-outline">
+     <button onClick={handleGoogleSignIn} className="btn btn-circle btn-outline">
     <FaGoogle />
 </button>
      </div>

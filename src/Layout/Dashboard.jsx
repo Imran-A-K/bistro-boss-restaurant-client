@@ -21,17 +21,17 @@ const Dashboard = () => {
     <ul className="menu bg-[#D1A054] p-4 w-80 ">
       {
         isAdmin ? <>
-        <li><NavLink to="/dashboard/home"><FaHome></FaHome> Admin Home</NavLink></li>
+        <li><NavLink to="/dashboard/adminhome"><FaHome></FaHome> Admin Home</NavLink></li>
       <li><NavLink to="/dashboard/addItem"><FaUtensils /> Add an Item</NavLink></li>
       <li><NavLink to="/dashboard/manageItems"><FaWallet /> Manage Items</NavLink></li>
-      <li><NavLink to="/dashboard/reservations"><FaBook /> Manage Bookings</NavLink></li>
+      <li><NavLink to="/"><FaBook /> Manage Bookings(Not Implemented)</NavLink></li>
       <li><NavLink to="/dashboard/allusers"><FaUser /> All users</NavLink></li>
 
       
         </> : <>
-        <li><NavLink to="/dashboard/home"><FaHome></FaHome> User Home</NavLink></li>
-      <li><NavLink to="/dashboard/reservations"><FaWallet /> Reservations</NavLink></li>
-      <li><NavLink to="/dashboard/history"><FaCalendarAlt /> Payment History </NavLink></li>
+        <li><NavLink to="/dashboard/userhome"><FaHome></FaHome> User Home</NavLink></li>
+      <li><NavLink to="/"><FaWallet /> Reservations(Not implemented)</NavLink></li>
+      <li><NavLink to="/"><FaCalendarAlt /> Payment History(Not implemented) </NavLink></li>
       <li>
         <NavLink to="/dashboard/mycart"><FaShoppingCart></FaShoppingCart> My Cart
         <span className="badge badge-secondary">+{cart?.length || 0}</span>

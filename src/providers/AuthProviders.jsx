@@ -51,7 +51,7 @@ const AuthProviders = ({ children }) => {
         // })
         // .then()
       if(currentUser){
-        await axios.post('http://localhost:5000/jwt', { email: currentUser.email })
+        await axios.post('https://bistro-boss-server-drab.vercel.app/jwt', { email: currentUser.email })
         .then(data => {
           // console.log(data.data.token)
           localStorage.setItem('access-token', data.data.token)
@@ -71,6 +71,7 @@ const AuthProviders = ({ children }) => {
       }
       else{
         localStorage.removeItem('access-token')
+        setUseCartQueryEnabler(false)
       }
       setLoading(false)
 

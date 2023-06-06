@@ -13,8 +13,8 @@ const FoodCard = ({item}) => {
     const handleAddToCart = item => {
         // console.log(item)
         if(user && user.email){
-          const cartItem = { foodId: _id,  name, image, price, email: user.email}
-          fetch(`http://localhost:5000/carts`,{
+          const cartItem = { menuItemId: _id,  name, image, price, email: user.email}
+          fetch(`https://bistro-boss-server-drab.vercel.app/carts`,{
             method: "POST",
             headers: {
               "content-type": "application/json"

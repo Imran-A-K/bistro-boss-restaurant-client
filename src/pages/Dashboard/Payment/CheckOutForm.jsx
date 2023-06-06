@@ -7,7 +7,7 @@ import { data } from "autoprefixer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import './CheckOutForm.css'
-const CheckOutForm = ({price, cart}) => {
+const CheckOutForm = ({price, cart, refetch}) => {
   
 
     const stripe = useStripe();
@@ -98,6 +98,7 @@ const CheckOutForm = ({price, cart}) => {
               showConfirmButton: false,
               timer: 1500
             })
+            refetch();
           }
         })
         }

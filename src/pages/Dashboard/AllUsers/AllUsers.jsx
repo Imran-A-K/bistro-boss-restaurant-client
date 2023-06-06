@@ -8,7 +8,7 @@ const AllUsers = () => {
   const token = localStorage.getItem('access-token')
   const [ axiosSecure ] = useAxiosSecure()
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-  //   const response = await fetch(`http://localhost:5000/users`,{
+  //   const response = await fetch(`https://bistro-boss-server-drab.vercel.app/users`,{
   //     headers : {
   //       authorization : `bearer ${token}`
   //     }
@@ -34,7 +34,7 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/carts/${user._id}`, {
+        fetch(`https://bistro-boss-server-drab.vercel.app/carts/${user._id}`, {
           method: "DELETE",
         })
           .then((response) => {
@@ -56,7 +56,7 @@ const AllUsers = () => {
 
   const handleMakeAdmin = (user) => {
 
-    fetch(`http://localhost:5000/users/admin/${user._id}`,{
+    fetch(`https://bistro-boss-server-drab.vercel.app/users/admin/${user._id}`,{
       method: "PATCH"
     })
     .then(response => response.json())
